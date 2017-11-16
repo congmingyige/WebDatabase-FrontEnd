@@ -1,74 +1,104 @@
-<<<<<<< HEAD
 <template>
   <div id="app">
-    <img src="./assets/logo2.jpg">
-    <h1>{{ msg }}</h1>
-    <el-button @click.native="startHacking">Let's do it</el-button>
+    <el-row class="body-style">
+       <img src="./assets/logo.png" ></img>    
+    </el-row>
+    
     <div class="block1">
+      <el-row :gutter="20" class="body-style">
+            <span class="demonstration" v-model="cha1">这里你将见到知识的海洋</span>
+      </el-row>
       <el-row :gutter="20">
-        <el-col :span="6">
+        <el-col :span="10">
           <div class="grid-content bg-white"></div>
         </el-col>
-        <el-col :span="4">
-          <div class="character1">
-            <span class="demonstration" v-model="character1">这里你将见到知识的海洋</span>
+        <el-col :span="8" class="col-style">
+          <div class="tab1">
+            <el-tabs v-model="activeName" @tab-click="handleClick" class="tab-size">
+              <el-tab-pane name="first"></el-tab-pane>
+              <el-tab-pane label="登录" name="second">
+                <div class="input3">
+                  <el-input v-model="input3" placeholder="手机号或邮箱" :cols="3" class="input-style"></el-input>
+                </div>
+                <div class="input4">
+                  <el-input v-model="input4" placeholder="密码" :cols="3" class="input-style"></el-input>
+                </div>
+                <div class="button1">
+                  <el-button class="el-button" v-model="button1" type="primary">登录</el-button> 
+                </div>
+                <el-row>
+                  <el-col :span="8">
+                    <div class="button2">
+                      <el-button type="text" v-model="button2" class="text-button-style1">手机二维码登录</el-button>
+                    </div>
+                  </el-col>
+                  <el-col :span="1">
+                    <div class="grid-content bg-white">
+                    </div>
+                  </el-col>
+                  <el-col :span="1">
+                    <div class="button3">
+                      <el-button type="text" v-model="button3" class="text-button-style2" >无法登录?</el-button>
+                    </div>
+                  </el-col>
+                </el-row>
+              </el-tab-pane>
+              <el-tab-pane name="third"></el-tab-pane>
+              <el-tab-pane name="fourth" label="注册">
+                <!--这里就需要稍微布局一下了-->
+                <div class="input5">
+                  <el-input v-model="input5" placeholder="姓名" :cols="3" class="input-style"></el-input>
+                </div>
+                <div class="input6">
+                  <el-input v-model="input6" placeholder="手机号" :cols="3" class="input-style"></el-input>
+                </div>
+                <div class="input7">
+                  <el-input v-model="input7" placeholder="邮箱号" :cols="3" class="input-style"></el-input>
+                </div>
+                <div class="input8">
+                  <el-input v-model="input8" placeholder="密码" :cols="3" class="input-style"></el-input>
+                </div>
+                <div class="input9">
+                  <el-input v-model="input9" placeholder="密码确认" :cols="3" class="input-style"></el-input>
+                </div>
+                <div class="input10">
+                  <el-input v-model="input10" placeholder="身份证号" :cols="3" class="input-style"></el-input>
+                </div>
+                <div class="button3">
+                  <el-button class="el-button" v-model="button1" type="primary">注册</el-button>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
           </div>
         </el-col>
-        <el-col :span="2">
-          <div class="grid-content bg-white"></div>
-        </el-col>
-        <el-col :span="4">
-          <div class="grid-content bg-white"></div>
-        </el-col>
       </el-row>
-     <el-row :gutter="20">
-       <el-col :span="14">
-         <div class="el-menu-demo"></div>
-         <el-menu theme="dark" :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-           <el-menu-item index="1">处理中心</el-menu-item>
-           <el-submenu index="2">
-             <template slot="title">我的工作台</template>
-             <el-menu-item index="2-1">选项1</el-menu-item>
-             <el-menu-item index="2-2">选项2</el-menu-item>
-             <el-menu-item index="2-3">选项3</el-menu-item>
-           </el-submenu>
-           <el-menu-item index="3">
-             <a href="https://www.ele.me" target="_blank">订单管理</a>
-           </el-menu-item>
-         </el-menu>
-       </el-col>
-     </el-row>
-   <el-row :gutter="20">
-   <el-col :span="6"><div class="grid-content bg-white"></div></el-col>
+   <!--<el-row :gutter="20">
+   <el-col :span="10"><div class="grid-content bg-white"></div></el-col>
    <el-col :span="4"><div class="input"><el-input v-model="input" placeholder="手机号或者邮箱"></el-input></div></el-col>
    <el-col :span="2"><div class="grid-content bg-white"></div></el-col>
    <el-col :span="4"><div class="grid-content bg-white"></div></el-col>
-    </el-row>
+   </el-row>
    <el-row :gutter="20">
-   <el-col :span="6"><div class="grid-content bg-white"></div></el-col>
+   <el-col :span="10"><div class="grid-content bg-white"></div></el-col>
    <el-col :span="4"><div class="input1"><el-input v-model="input1" placeholder="密码"></el-input></div></el-col>
    <el-col :span="2"><div class="grid-content bg-white"></div></el-col>
    <el-col :span="4"><div class="grid-content bg-white"></div></el-col>
     </el-row>
     <el-row :gutter="20">
-   <el-col :span="7"><div class="grid-content bg-white"></div></el-col> 
-   <el-col :span="6"><div class="button1"><el-button v-model="input1" type="primary">登陆</el-button></div></el-col>
+   <el-col :span="10"><div class="grid-content bg-white"></div></el-col> 
+   <el-col :span="6"><div class="button1"><el-button v-model="input1" type="primary" class="el-botton">登陆</el-button></div></el-col>
    <el-col :span="4"><div class="grid-content bg-white"></div></el-col>
     </el-row>
-    </span>
-    <br/>
-      </div>
+    -->
+     </div>
    </div>
 </template>
 <script>
 export default {
-  data () {
-    return {
-      activeIndex2: '1',
-      input: ''
-    }
+  data (){
+     input: '',
+     activeName;'second'
   },
-
   methods: {
     startHacking () {
       this.$notify({
@@ -83,10 +113,9 @@ export default {
   }
 }
 </script>
-
 <style>
 body {
-  font-family: Helvetica, sans-serif;
+  font-family: Helvetica, sans-serif,MicrosoftYahei;
 }
    .el-row {
     margin-bottom: 20px;
@@ -114,121 +143,40 @@ body {
     padding: 10px 0;
     background-color: #f9fafc;
   }
-=======
-<template>
-  <div id="app">
-    <img src="./assets/logo2.jpg">
-    <h1>{{ msg }}</h1>
-    <el-button @click.native="startHacking">Let's do it</el-button>
-    <div class="block1">
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <div class="grid-content bg-white"></div>
-        </el-col>
-        <el-col :span="4">
-          <div class="character1">
-            <span class="demonstration" v-model="character1">这里你将见到知识的海洋</span>
-          </div>
-        </el-col>
-        <el-col :span="2">
-          <div class="grid-content bg-white"></div>
-        </el-col>
-        <el-col :span="4">
-          <div class="grid-content bg-white"></div>
-        </el-col>
-      </el-row>
-     <el-row :gutter="20">
-       <el-col :span="14">
-         <div class="el-menu-demo"></div>
-         <el-menu theme="dark" :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-           <el-menu-item index="1">处理中心</el-menu-item>
-           <el-submenu index="2">
-             <template slot="title">我的工作台</template>
-             <el-menu-item index="2-1">选项1</el-menu-item>
-             <el-menu-item index="2-2">选项2</el-menu-item>
-             <el-menu-item index="2-3">选项3</el-menu-item>
-           </el-submenu>
-           <el-menu-item index="3">
-             <a href="https://www.ele.me" target="_blank">订单管理</a>
-           </el-menu-item>
-         </el-menu>
-       </el-col>
-     </el-row>
-   <el-row :gutter="20">
-   <el-col :span="6"><div class="grid-content bg-white"></div></el-col>
-   <el-col :span="4"><div class="input"><el-input v-model="input" placeholder="手机号或者邮箱"></el-input></div></el-col>
-   <el-col :span="2"><div class="grid-content bg-white"></div></el-col>
-   <el-col :span="4"><div class="grid-content bg-white"></div></el-col>
-    </el-row>
-   <el-row :gutter="20">
-   <el-col :span="6"><div class="grid-content bg-white"></div></el-col>
-   <el-col :span="4"><div class="input1"><el-input v-model="input1" placeholder="密码"></el-input></div></el-col>
-   <el-col :span="2"><div class="grid-content bg-white"></div></el-col>
-   <el-col :span="4"><div class="grid-content bg-white"></div></el-col>
-    </el-row>
-    <el-row :gutter="20">
-   <el-col :span="7"><div class="grid-content bg-white"></div></el-col> 
-   <el-col :span="6"><div class="button1"><el-button v-model="input1" type="primary">登陆</el-button></div></el-col>
-   <el-col :span="4"><div class="grid-content bg-white"></div></el-col>
-    </el-row>
-    </span>
-    <br/>
-      </div>
-   </div>
-</template>
-<script>
-export default {
-  data () {
-    return {
-      activeIndex2: '1',
-      input: ''
-    }
-  },
-
-  methods: {
-    startHacking () {
-      this.$notify({
-        title: 'It Works',
-        message: 'We have laid the groundwork for you. Now it\'s your time to build something epic!',
-        duration: 6000
-      })
-    },
-    handleSelect (key, keyPath) {
-      console.log(key, keyPath)
-    }
+ .body-style {
+    text-align: center;
   }
-}
-</script>
-
-<style>
-body {
-  font-family: Helvetica, sans-serif;
-}
-   .el-row {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    }
+  .el-menu {
+     background-color: transparent;
+     width: 200px;
   }
-  .el-col {
-    border-radius: 4px;
+  .el-button {
+     width: 230px;
   }
-  .bg-purple-dark {
-    background: #99a9bf;
+  .col-style {
+    margin-left: -10px;
   }
-  .bg-purple {
-    background: #d3dce6;
+  .demonstration {
+    font-size: 400;
   }
-  .bg-purple-light {
-    background: #e5e9f2;
+  .tab-size {
+    width: 230px;
+    padding-left: 15px;
   }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
+  .input-style {
+    margin-bottom: 5px;
+    width: 230px;
+    height: 40px;
   }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
+  .text-button-style1 {
+    text-align:left;
+    width:120px; 
   }
->>>>>>> 7ce503dda699fb05693e9db8672c9953690470e7
+  .text-button-style2 {
+    text-align:right;
+    width:135px;
+    color:grey;
+  }
+    
+  
 </style>
