@@ -5,21 +5,14 @@
         <div class="author">
           <img src="../assets/logo.png" class="nav-usr" style="height:40px;">
           <div style="position:relative; left:40px;">
-            <a style="font-size:14px;line-height:1.5"> {{ author }} </a>
+            <a style="font-size:14px;line-height:1.5"> {{ comment_author }} </a>
             <div>
-              <span class="font-size-exsmall font-color-light"> {{ time }} </span>
+              <span class="font-size-exsmall font-color-light"> {{ comment_time }} </span>
             </div>
           </div>
         </div>
         <div class="font-size-small font-color-medium">
-          <p> {{ content }} </p>
-        </div>
-        <div class="rating">
-          <span class="font-size-small font-color-light"> 请给这篇文章打个分吧 </span>
-          <el-rate
-            v-model="article_score"
-            :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-          </el-rate>
+          <p> {{ comment_content }} </p>
         </div>
       </el-col>
     </el-row>
@@ -28,18 +21,15 @@
 
 <script>
   export default {
-      name: 'Comment',
-      data(){
-        return {
-          author: '',
-          time: '',
-          content: '',
-          article_score: 0
-        }
-      },
-      method: {
-
+    props: ['comment_id', 'comment_author', 'comment_time', 'comment_content'],
+    name: 'Comment',
+    data(){
+      return {
       }
+    },
+    method: {
+
+    }
   }
 </script>
 

@@ -185,13 +185,14 @@ export default {
                 "password": password
           };
           let account = JSON.stringify(temp);
-          this.$http.post("http://127.0.0.1:8000/login/",account)
+          this.$http.post("http://127.0.0.1:8005/login/",account)
                     .then((response) => {
                         console.log("OK in login");
                         console.log(response);
                         alert(this.account_code[response.body]);
                         if(response.body == "120") {
-                          this.$router.push('/hello');
+                          this.$router.push('/p/1');
+
                         }
                     },
                     (response) => {
@@ -220,13 +221,14 @@ export default {
                       "password": password
                 };
                 let account = JSON.stringify(temp);
-                this.$http.post("http://127.0.0.1:8000/register/",account)
+                this.$http.post("http://127.0.0.1:8005/register/",account)
                           .then((response) => {
                               console.log("register OK");
                               console.log(response);
                               alert(this.account_code[response.body]);
                               if(response.body == "110") {
-                                this.$router.push('/hello');
+                                this.$router.push('/p/1');
+
                               }
                           },
                           (response) => {
