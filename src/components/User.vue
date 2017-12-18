@@ -189,10 +189,10 @@ export default {
                     .then((response) => {
                         console.log("OK in login");
                         console.log(response);
-                        alert(this.account_code[response.body]);
-                        if(response.body == "120") {
-                          this.$router.push('/p');
-                          location.reload();
+                        this.$parent.set('sessionKey', response.body.sessionKey, 1);
+                        this.$parent.set('username', username, 1);
+                        if(response.body.code == "120") {
+                          this.$router.push('/p/1');
                         }
                     },
                     (response) => {
@@ -228,7 +228,6 @@ export default {
                               alert(this.account_code[response.body]);
                               if(response.body == "110") {
                                 this.$router.push('/p');
-                                location.reload();
                               }
                           },
                           (response) => {

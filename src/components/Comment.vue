@@ -20,17 +20,17 @@
 </template>
 
 <script>
-  export default {
-    props: ['comment_id', 'comment_author', 'comment_time', 'comment_content'],
-    name: 'Comment',
-    data(){
-      return {
-      }
-    },
-    method: {
+    export default {
+        props: ['comment_id', 'comment_author', 'comment_time', 'comment_content'],
+        name: 'Comment',
+        data(){
+            return {
+            }
+        },
+        methods: {
 
+        }
     }
-  }
 </script>
 
 <style>

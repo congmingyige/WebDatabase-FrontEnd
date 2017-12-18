@@ -12,8 +12,18 @@ Vue.use(ElementUI)
 Vue.use(VueResource)
 Vue.use(router)
 
+/*
+Vue.http.options.emulateHTTP = true;
+Vue.http.options.emulateJSON = true;
+
+Vue.http.options.headers = {
+  'Content-Type': 'application/text; charset=UTF-8'
+}
+*/
+
 new Vue({
   el: '#app',
   router,
   render: h => h(App)
 })
+

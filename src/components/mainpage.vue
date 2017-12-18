@@ -243,17 +243,18 @@
   </div>
 </template>
 <script>
-import projHeadline from '../components/projHeadline.vue'
+import Headline from '../components/Headline.vue'
 export default {
-  name: 'app',
+  name: 'mainpage',
   components: {
-    projHeadline,
+    Headline,
   },
   data () {
     return {
       activeIndex: '1',
       activeName2: 'first',
-      input: ''
+      input: '',
+      input2: ''
     }
   },
   methods: {
@@ -272,6 +273,9 @@ export default {
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath)
+    },
+    handleIconClick() {
+
     },
     open () {
       this.$alert('这是一段内容', '标题名称', {
