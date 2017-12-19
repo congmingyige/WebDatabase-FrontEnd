@@ -5,7 +5,8 @@ import User from '../components/User'
 import Article from '../components/Article'
 import ArticleCreate from '../components/ArticleCreate'
 import ArticleUpdate from '../components/ArticleUpdate'
-import Mainpage from '../components/mainpage'
+import Mainpage from '../components/Mainpage'
+import Headline from '../components/Headline'
 import Test from '../components/Test'
 
 Vue.use(VueRouter)

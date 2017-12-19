@@ -29,8 +29,8 @@
                         <el-button type="primary" v-bind:icon="like" @click="likedChange"></el-button>
                         <el-button type="primary" v-bind:icon="star" @click="starChange"></el-button>
 
-                        <el-button type="primary" icon="el-icon-edit" @click="articleUpdate"></el-button>
-                        <el-button type="primary" icon="el-icon-delete" @click="articleDelete"></el-button>
+                        <el-button type="primary" icon="el-icon-edit" v-show="modify" @click="articleUpdate"></el-button>
+                        <el-button type="primary" icon="el-icon-delete" v-show="modify" @click="articleDelete"></el-button>
                       </el-button-group>
                     </div>
                   </div>
@@ -83,6 +83,7 @@
             </span>
 
             <el-button type="primary" @click="commentOpen">加载更多</el-button>
+            <el-button type="primary" @click="commentRefresh">加载刷新</el-button>
 
           </div>
 
@@ -110,6 +111,7 @@
             condition: false,
             like: 'el-icon-star-off',
             star: 'el-icon-star-off',
+            modify: false,
             title: '',
             author: '',
             time: '',
@@ -119,16 +121,15 @@
             liked_count: 0,
             collection_count: 0,
             text_length: 0,
+            comments_number: 0,
+            author_comments: [],
 
             comments: [],
             comment_id: '',
             comment_author: '',
             comment_time: '',
             comment_content: '',
-            comments_round: 1,
-            comments_cross_boundary: 0,
             content: '',
-            author_comments: [],
 
             username: '',
             article_score: 0,
@@ -154,6 +155,8 @@
                     this.like = 'el-icon-star-on';
                 if (response.body.if_collection == 1)
                     this.star = 'el-icon-star-on';
+                if (response.body.if_modify == 1)
+                    this.modify = true;
                 let article = response.body.article;
                 this.title = article.title;
                 this.author = article.author;
@@ -170,14 +173,11 @@
                 alert('数据传输失败');
                 return;
             });
-            console.log(this.comments_cross_boundary);
             this.commentOpen();
         })
     },
     methods: {
         commentOpen: function() {
-            if (this.comments_cross_boundary==1)
-                return;
             this.$http({
                 method: 'POST',
                 url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + "/comments",
@@ -185,7 +185,7 @@
                     'sessionKey': this.$parent.get('sessionKey')
                 },
                 body: {
-                    'comments_round': this.comments_round
+                    'comments_number': this.comments_number
                 }
               }).then((response) => {
                 if (response.body.code == "106") {
@@ -193,13 +193,56 @@
                     return;
                 }
                 this.comments = this.comments.concat(response.body.article_comments);
-                this.comments_cross_boundary = response.body.comments_cross_boundary;
-                if (this.comments_cross_boundary == 0)
-                    this.comments_round = this.comments_round + 1;
+                this.comments_number = response.body.comments_number;
               },
               (response) => {
                 alert('数据传输失败');
             });
+        },
+        commentCreate: function () {
+            if (this.content.length == 0) {
+                alert('评论信息不能为空');
+                return;
+            }
+            this.$http({
+                method: 'POST',
+                url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + "/c/create",
+                headers: {
+                    'sessionKey': this.$parent.get('sessionKey')
+                },
+                body: {
+                    'content': this.content
+                }
+              }).then((response) => {
+                if (response.body.code == '103') {
+                    alert('用户不存在');
+                    this.$router.push("/");
+                    return;
+                }
+                if (response.body.code == '106') {
+                    alert('文章不存在');
+                    return;
+                }
+                let comment_new = {};
+                let author_comments = [];
+                comment_new['id'] = response.body.id;
+                comment_new['author'] = this.$parent.get('username');
+                comment_new['time'] = response.body.time;
+                comment_new['content'] = this.content;
+                author_comments = author_comments.concat(comment_new);
+                this.author_comments = author_comments.concat(this.author_comments);
+                this.comments_count = this.comments_count + 1;
+                this.content = '';
+              },
+              (response) => {
+                alert('数据传输失败');
+              });
+        },
+        commentRefresh: function() {
+            this.comments = [];
+            this.author_comments = [];
+            this.comments_number = 0;
+            this.commentOpen();
         },
         articleOpen1: function () {
             this.$http({
@@ -354,52 +397,12 @@
             }
         },
         articleUpdate: function () {
-            this.$router.push("/p/" + this.$route.params.id_article + '/update');
-        },
-        articleDelete: function () {
-            if (this.like == "el-icon-star-off") {
-                this.$http({
-                    method: 'POST',
-                    url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + '/delete',
-                    headers: {
-                        'sessionKey': this.$parent.get('sessionKey')
-                    },
-                  }).then((response) => {
-                    if (response.body.code == '103') {
-                        alert('用户不存在');
-                        this.$router.push("/");
-                        return;
-                    }
-                    if (response.body.code == '106') {
-                        alert('文章不存在');
-                        return;
-                    }
-                    if (response.body.code == '109') {
-                        alert('无权限请求');
-                        return;
-                    }
-                    alert('删除文章成功');
-                    this.condition = false;
-                  },
-                  (response) => {
-                    alert('数据传输失败');
-                });
-            }
-        },
-        commentCreate: function () {
-            if (this.content.length == 0) {
-                alert('评论信息不能为空');
-                return;
-            }
             this.$http({
                 method: 'POST',
-                url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + "/c/create",
+                url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + '/update',
                 headers: {
                     'sessionKey': this.$parent.get('sessionKey')
                 },
-                body: {
-                    'content': this.content
-                }
               }).then((response) => {
                 if (response.body.code == '103') {
                     alert('用户不存在');
@@ -410,21 +413,44 @@
                     alert('文章不存在');
                     return;
                 }
-                let comment_new = {};
-                let author_comments = [];
-                comment_new['id'] = response.body.id;
-                comment_new['author'] = this.$parent.get('username');
-                comment_new['time'] = response.body.time;
-                comment_new['content'] = this.content;
-
-                author_comments = author_comments.concat(comment_new);
-                this.author_comments = author_comments.concat(this.author_comments);
-                this.comments_count = this.comments_count + 1;
-                this.content = '';
+                if (response.body.code == '109') {
+                    alert('无权限请求');
+                    return;
+                }
+                alert('删除文章成功');
+                this.condition = false;
               },
               (response) => {
                 alert('数据传输失败');
-              });
+            });
+        },
+        articleDelete: function () {
+            this.$http({
+                method: 'POST',
+                url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + '/delete',
+                headers: {
+                    'sessionKey': this.$parent.get('sessionKey')
+                },
+              }).then((response) => {
+                if (response.body.code == '103') {
+                    alert('用户不存在');
+                    this.$router.push("/");
+                    return;
+                }
+                if (response.body.code == '106') {
+                    alert('文章不存在');
+                    return;
+                }
+                if (response.body.code == '109') {
+                    alert('无权限请求');
+                    return;
+                }
+                alert('删除文章成功');
+                this.condition = false;
+              },
+              (response) => {
+                alert('数据传输失败');
+            });
         }
     }
   }

@@ -6,6 +6,12 @@
 
 <script>
   export default {
+      name: 'App',
+      data() {
+          return {
+
+          }
+      },
       methods: {
           set: function (name, value, days) {
               var d = new Date;

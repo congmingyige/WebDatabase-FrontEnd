@@ -1,46 +1,6 @@
 <template>
-  <div id ="app">
-    <div class="headline" >
-          <el-header style="padding:0;">
-            <el-row>
-                <el-menu :default-active="activeIndex" class="el-menu-demo;"  mode="horizontal">
-                <el-row>
-                    <el-col :span="8"  type="flex" justify="space-around">
-                      <el-menu-item index="1" class="font-size-large">
-                        <a src="www.baidu.com"><img src="../assets/logo.png" style="height:50px;" class="nav-logo"></a>
-                      </el-menu-item>
-                      <el-menu-item index="1" class="font-size-large">发现</el-menu-item>
-                      <el-menu-item index="1" class="font-size-large">关注</el-menu-item>
-                      <el-menu-item index="1" class="font-size-large">消息</el-menu-item>
-                    </el-col>
-                    <el-col :span="14">
-                      <el-menu-item index="1">
-                          <el-input
-                                placeholder="请输入想查找的内容"
-                                icon="search"
-                                v-model="input2"
-                                :on-icon-click="handleIconClick">
-                          </el-input>
-                          <el-button type="primary">搜索</el-button>
-                      </el-menu-item>
-                    </el-col>
-                    <el-col :span="2">
-                      <div style="display:flex; display:-webkit-flex; align-items:center;">
-                          <el-submenu index="2">
-                              <template slot="title"><img src="../assets/logo.png" style="height:40px;"></template>
-                              <el-menu-item index="2-1">我的主页</el-menu-item>
-                              <el-menu-item index="2-2">设置</el-menu-item>
-                              <el-menu-item index="2-3">退出</el-menu-item>
-                          </el-submenu>
-                      </div>
-                    </el-col>
-                </el-row>
-                </el-menu>
-            </el-row>
-        </el-header>
-    </div>
-
-    <div class ="card0">
+    <div class="Mainpage" >
+      <Headline></Headline>
       <el-row>
         <el-col :span="2">
           <el-button type="text" class="title-style el-icon-view"> 我的关注</el-button>
@@ -240,12 +200,11 @@
         </el-col>
       </el-row>
       </div>
-  </div>
 </template>
 <script>
 import Headline from '../components/Headline.vue'
 export default {
-  name: 'mainpage',
+  name: 'Mainpage',
   components: {
     Headline,
   },
