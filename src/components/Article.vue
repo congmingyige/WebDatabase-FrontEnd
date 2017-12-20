@@ -1,7 +1,6 @@
 <template>
     <div id="Article" v-show="condition">
     <el-container>
-        <Headline :username="username"></Headline>
         <el-main>
           <div>
             <el-row>
@@ -99,11 +98,9 @@
 
 <script>
   import Comment from '../components/Comment'
-  import Headline from '../components/Headline'
   export default {
     components: {
         Comment,
-        Headline
     },
     name: 'Article',
     data() {
@@ -131,8 +128,8 @@
             comment_content: '',
             content: '',
 
-            username: '',
             article_score: 0,
+
         }
     },
     mounted: function() {
@@ -144,8 +141,6 @@
                     'sessionKey': this.$parent.get('sessionKey')
                 }
               }).then((response) => {
-                //this.$parent.set('sessionKey', response.body.sessionKey, 1);
-                this.username = this.$parent.get('username');
                 if (response.body.code == "106") {
                     alert('文章不存在');
                     return;

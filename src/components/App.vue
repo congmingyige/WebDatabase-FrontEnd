@@ -1,16 +1,24 @@
 <template>
   <div id="App">
+    <Headline :username="username"></Headline>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+  import Headline from '../components/Headline';
   export default {
+      components: {
+          Headline
+      },
       name: 'App',
       data() {
           return {
-
+              username: '',
           }
+      },
+      mounted: function() {
+          this.username = this.get('username');
       },
       methods: {
           set: function (name, value, days) {

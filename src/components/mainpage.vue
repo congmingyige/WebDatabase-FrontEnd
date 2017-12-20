@@ -1,6 +1,5 @@
 <template>
     <div class="Mainpage" >
-      <Headline></Headline>
       <el-row>
         <el-col :span="2">
           <el-button type="text" class="title-style el-icon-view"> 我的关注</el-button>
@@ -202,11 +201,9 @@
       </div>
 </template>
 <script>
-import Headline from '../components/Headline.vue'
 export default {
   name: 'Mainpage',
   components: {
-    Headline,
   },
   data () {
     return {
