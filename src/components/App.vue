@@ -1,6 +1,6 @@
 <template>
-  <div id="App">
-    <Headline :username="username"></Headline>
+  <div id="App" >
+      <Headline :username="username" v-if="headline_condition"></Headline>
     <router-view></router-view>
   </div>
 </template>
@@ -15,10 +15,13 @@
       data() {
           return {
               username: '',
+              headline_condition: true
           }
       },
       mounted: function() {
+          console.log('test');
           this.username = this.get('username');
+          console.log(this.username);
       },
       methods: {
           set: function (name, value, days) {

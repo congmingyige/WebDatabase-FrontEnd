@@ -35,7 +35,6 @@
     },
     methods: {
       articleOpen: function() {
-        document.cookie="username"+"="+"chen"+";";
         this.$http.post("http://127.0.0.1:8005/p/"+this.$route.params.id_article)
                   .then((response) => {
                       if (response.body == "106") {

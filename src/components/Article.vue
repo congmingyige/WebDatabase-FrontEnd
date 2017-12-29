@@ -25,11 +25,11 @@
                         </span>
                       </div>
                       <el-button-group>
-                        <el-button type="primary" v-bind:icon="like" @click="likedChange"></el-button>
-                        <el-button type="primary" v-bind:icon="star" @click="starChange"></el-button>
+                        <el-button type="text" v-bind:icon="like" @click="likedChange">点赞</el-button>
+                        <el-button type="text" v-bind:icon="star" @click="starChange">收藏</el-button>
 
-                        <el-button type="primary" icon="el-icon-edit" v-show="modify" @click="articleUpdate"></el-button>
-                        <el-button type="primary" icon="el-icon-delete" v-show="modify" @click="articleDelete"></el-button>
+                        <el-button type="text" icon="el-icon-edit" v-show="modify" @click="articleUpdate">修改</el-button>
+                        <el-button type="text" icon="el-icon-delete" v-show="modify" @click="articleDelete">删除</el-button>
                       </el-button-group>
                     </div>
                   </div>
@@ -81,17 +81,17 @@
               <Comment :comment_id="comment.id" :comment_author="comment.author" :comment_time="comment.time" :comment_content="comment.content"></Comment>
             </span>
 
-            <el-button type="primary" @click="commentOpen">加载更多</el-button>
-            <el-button type="primary" @click="commentRefresh">加载刷新</el-button>
+            <el-row>
+              <el-col :span="24" style="text-align:center">
+                <el-button type="info" @click="commentLoad">加载更多</el-button>
+                <el-button :span="24" type="info" @click="commentRefresh">加载刷新</el-button>
+              </el-col>
+            </el-row>
 
           </div>
 
         </el-main>
-        <el-footer>
-          <div class="footer">
-            footer
-          </div>
-        </el-footer>
+
     </el-container>
   </div>
 </template>
@@ -106,7 +106,7 @@
     data() {
         return {
             condition: false,
-            like: 'el-icon-star-off',
+            like: 'el-icon-circle-check-outline',
             star: 'el-icon-star-off',
             modify: false,
             title: '',
@@ -138,7 +138,7 @@
                 method: 'POST',
                 url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + "/article",
                 headers: {
-                    'sessionKey': this.$parent.get('sessionKey')
+                    'sessionKey': 'weep477idbab9ig004kbazppr77v2f0p'
                 }
               }).then((response) => {
                 if (response.body.code == "106") {
@@ -147,7 +147,7 @@
                 }
                 this.condition = true;
                 if (response.body.if_liked == 1)
-                    this.like = 'el-icon-star-on';
+                    this.like = 'el-icon-success';
                 if (response.body.if_collection == 1)
                     this.star = 'el-icon-star-on';
                 if (response.body.if_modify == 1)
@@ -168,16 +168,16 @@
                 alert('数据传输失败');
                 return;
             });
-            this.commentOpen();
+            this.commentLoad();
         })
     },
     methods: {
-        commentOpen: function() {
+        commentLoad: function() {
             this.$http({
                 method: 'POST',
                 url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + "/comments",
                 headers: {
-                    'sessionKey': this.$parent.get('sessionKey')
+                    'sessionKey': 'weep477idbab9ig004kbazppr77v2f0p'
                 },
                 body: {
                     'comments_number': this.comments_number
@@ -203,7 +203,7 @@
                 method: 'POST',
                 url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + "/c/create",
                 headers: {
-                    'sessionKey': this.$parent.get('sessionKey')
+                    'sessionKey': 'weep477idbab9ig004kbazppr77v2f0p'
                 },
                 body: {
                     'content': this.content
@@ -237,14 +237,14 @@
             this.comments = [];
             this.author_comments = [];
             this.comments_number = 0;
-            this.commentOpen();
+            this.commentLoad();
         },
-        articleOpen1: function () {
+        articleLoad1: function () {
             this.$http({
                 method: 'POST',
                 url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article,
                 headers: {
-                    'sessionKey': this.$parent.get('sessionKey')
+                    'sessionKey': 'weep477idbab9ig004kbazppr77v2f0p'
                 }
               }).then((response) => {
                 this.$parent.set('sessionKey', response.body.sessionKey, 1);
@@ -275,12 +275,13 @@
             });
         },
         likedChange: function () {
-            if (this.like == "el-icon-star-off") {
+            console.log(this.$parent.get('sessionKey'));
+            if (this.like == "el-icon-circle-check-outline") {
                 this.$http({
                     method: 'POST',
                     url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + '/liked',
                     headers: {
-                        'sessionKey': this.$parent.get('sessionKey')
+                        'sessionKey': 'weep477idbab9ig004kbazppr77v2f0p'
                     },
                   }).then((response) => {
                     if (response.body.code == '103') {
@@ -296,7 +297,7 @@
                         alert('错误请求');
                         return;
                     }
-                    this.like = "el-icon-star-on";
+                    this.like = "el-icon-success";
                     this.liked_count = this.liked_count + 1;
                   },
                   (response) => {
@@ -308,7 +309,7 @@
                     method: 'POST',
                     url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + '/not_liked',
                     headers: {
-                        'sessionKey': this.$parent.get('sessionKey')
+                        'sessionKey': 'weep477idbab9ig004kbazppr77v2f0p'
                     },
                   }).then((response) => {
                     if (response.body.code == '103') {
@@ -324,7 +325,7 @@
                         alert('错误请求');
                         return;
                     }
-                    this.like = "el-icon-star-off";
+                    this.like = "el-icon-circle-check-outline";
                     this.liked_count = this.liked_count - 1;
                 },
                 (response) => {
@@ -338,7 +339,7 @@
                     method: 'POST',
                     url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + '/collection',
                     headers: {
-                        'sessionKey': this.$parent.get('sessionKey')
+                        'sessionKey': 'weep477idbab9ig004kbazppr77v2f0p'
                     },
                   }).then((response) => {
                     if (response.body.code == '103') {
@@ -367,7 +368,7 @@
                     method: 'POST',
                     url: "http://127.0.0.1:8005/p/" + this.$route.params.id_article + '/not_collection',
                     headers: {
-                        'sessionKey': this.$parent.get('sessionKey')
+                        'sessionKey': 'weep477idbab9ig004kbazppr77v2f0p'
                     },
                   }).then((response) => {
                     if (response.body.code == '103') {

@@ -206,6 +206,8 @@ export default {
   components: {
   },
   data () {
+    console.log(this.$parent.get('username'));
+    console.log(this.$parent.get('sessionKey'));
     return {
       activeIndex: '1',
       activeName2: 'first',

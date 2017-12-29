@@ -1,5 +1,6 @@
 <template>
   <div id="User">
+
     <el-row class="body-style">
        <img src="../assets/logo.png" ></img>
     </el-row>
@@ -191,8 +192,11 @@ export default {
                         console.log(response);
                         this.$parent.set('sessionKey', response.body.sessionKey, 1);
                         this.$parent.set('username', username, 1);
+                        this.$parent.set('id_user', response.body.id_user, 1);
+                        this.$parent.headline_condition = true;
                         if(response.body.code == "120") {
-                          this.$router.push('/p/1');
+                          this.$router.push('/p');
+                          location.reload();
                         }
                     },
                     (response) => {
@@ -226,8 +230,10 @@ export default {
                               console.log("register OK");
                               console.log(response);
                               alert(this.account_code[response.body]);
+                              this.$parent.headline_condition = true;
                               if(response.body == "110") {
-                                this.$router.push('/p');
+                                this.$router.push('/'); //注册完后重新跳转到登录页面
+                                location.reload();
                               }
                           },
                           (response) => {
@@ -254,6 +260,9 @@ export default {
       resetForm(formName) {
         this.$refs[formName].resetFields();
       }
+  },
+  beforeCreate: function() {
+    this.$parent.headline_condition = false;
   }
 }
 </script>
@@ -271,15 +280,7 @@ body {
   .el-col {
     border-radius: 4px;
   }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
+
   .grid-content {
     border-radius: 4px;
     min-height: 36px;
